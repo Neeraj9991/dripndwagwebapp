@@ -19,10 +19,10 @@ const AboutUsPage = () => {
       <div className="max-w-4xl mx-auto mb-16">
         <h2 className="text-2xl font-semibold mb-4">Our Mission</h2>
         <p className="text-gray-700 text-lg leading-relaxed">
-          At DripnDwag, we're not just selling T-shirts — we’re delivering
-          confidence, comfort, and creativity. Whether you’re into anime, street
-          culture, or minimalist design, our collections are crafted to let you
-          express your vibe effortlessly.
+          At DripnDwag, we&rsquo;re not just selling T-shirts — we&rsquo;re
+          delivering confidence, comfort, and creativity. Whether you&rsquo;re
+          into anime, street culture, or minimalist design, our collections are
+          crafted to let you express your vibe effortlessly.
         </p>
       </div>
 

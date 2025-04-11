@@ -36,6 +36,16 @@ const CartModal = ({ onClose }: { onClose: () => void }) => {
     }
   };
 
+  function calculateSubtotal(cart: currentCart.Cart | null): number {
+    if (!cart || !cart.lineItems) return 0;
+
+    return cart.lineItems.reduce((total, item) => {
+      const price = Number(item.price?.amount || 0);
+      const quantity = item.quantity || 1;
+      return total + price * quantity;
+    }, 0);
+  }
+
   return (
     <AnimatePresence>
       <motion.div
@@ -179,7 +189,7 @@ const CartModal = ({ onClose }: { onClose: () => void }) => {
                     Subtotal
                   </span>
                   <span className="font-bold text-gray-900">
-                    ${cart.subtotal.amount}
+                    ${calculateSubtotal(cart).toFixed(2)}
                   </span>
                 </div>
                 <p className="text-xs text-gray-500 mb-4 text-center">

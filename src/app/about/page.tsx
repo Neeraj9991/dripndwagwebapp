@@ -1,69 +1,132 @@
-"use client";
-
 import React from "react";
+import Image from "next/image";
+import { FaLeaf, FaHandsHelping, FaAward } from "react-icons/fa";
 
-const AboutUsPage = () => {
+const About = () => {
   return (
-    <div className="min-h-screen bg-white text-gray-800 px-4 py-20 sm:px-8 md:px-16">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       {/* Hero Section */}
-      <div className="text-center max-w-3xl mx-auto mb-16">
-        <h1 className="text-4xl sm:text-5xl font-extrabold mb-4">
-          About DripnDwag
-        </h1>
-        <p className="text-lg sm:text-xl text-gray-600">
-          Where fashion meets personality — one T-shirt at a time.
+      <section className="text-center mb-16">
+        <h1 className="text-4xl font-bold text-gray-900 mb-4">Our Story</h1>
+        <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          Building a better shopping experience since 2015
         </p>
-      </div>
+      </section>
 
-      {/* Mission Section */}
-      <div className="max-w-4xl mx-auto mb-16">
-        <h2 className="text-2xl font-semibold mb-4">Our Mission</h2>
-        <p className="text-gray-700 text-lg leading-relaxed">
-          At DripnDwag, we&rsquo;re not just selling T-shirts — we&rsquo;re
-          delivering confidence, comfort, and creativity. Whether you&rsquo;re
-          into anime, street culture, or minimalist design, our collections are
-          crafted to let you express your vibe effortlessly.
-        </p>
-      </div>
+      {/* About Section */}
+      <section className="mb-20">
+        {/* <div className="grid md:grid-cols-2 gap-12 items-center"> */}
+        <div>
+          <h2 className="text-3xl font-bold text-gray-900 mb-6">Who We Are</h2>
+          <p className="text-gray-600 mb-4">
+            Founded in 2015, our e-commerce platform began with a simple
+            mission: to make online shopping more enjoyable, reliable, and
+            accessible for everyone. What started as a small team of passionate
+            individuals has grown into a trusted destination for thousands of
+            customers worldwide.
+          </p>
+          <p className="text-gray-600 mb-4">
+            We carefully curate our product selection to bring you the best
+            quality items at fair prices. Our team personally tests and
+            evaluates each product before adding it to our collection.
+          </p>
+          <p className="text-gray-600">
+            Today, we're proud to serve over 500,000 satisfied customers with a
+            catalog of more than 10,000 products across various categories.
+          </p>
+          {/* </div> */}
+          {/* <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
+            <Image
+              src="/about-team.jpg"
+              alt="Our team working together"
+              fill
+              className="object-cover"
+              priority
+            />
+          </div> */}
+        </div>
+      </section>
 
       {/* Values Section */}
-      <div className="max-w-4xl mx-auto mb-16">
-        <h2 className="text-2xl font-semibold mb-4">What We Stand For</h2>
-        <ul className="space-y-4 text-gray-700 text-lg">
-          <li>
-            ✅ <strong>Quality First</strong> — We source premium fabrics and
-            pay attention to every stitch.
-          </li>
-          <li>
-            🚀 <strong>Bold Expression</strong> — Fashion is your voice. We help
-            you turn it up.
-          </li>
-          <li>
-            🌿 <strong>Slow Fashion</strong> — Our pieces are made to last and
-            respect the planet.
-          </li>
-          <li>
-            🙌 <strong>Community Driven</strong> — You inspire our next drop.
-          </li>
-        </ul>
-      </div>
+      <section className="mb-20">
+        <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">
+          Our Values
+        </h2>
+        <div className="grid md:grid-cols-3 gap-8">
+          {[
+            {
+              icon: <FaLeaf className="text-green-500 text-4xl mb-4" />,
+              title: "Sustainability",
+              description:
+                "We're committed to eco-friendly practices and partner with suppliers who share our environmental values.",
+            },
+            {
+              icon: <FaHandsHelping className="text-blue-500 text-4xl mb-4" />,
+              title: "Customer First",
+              description:
+                "Your satisfaction is our top priority. Our support team is available 24/7 to assist you.",
+            },
+            {
+              icon: <FaAward className="text-yellow-500 text-4xl mb-4" />,
+              title: "Quality Assurance",
+              description:
+                "Every product undergoes rigorous testing to ensure it meets our high standards before reaching you.",
+            },
+          ].map((value, index) => (
+            <div key={index} className="bg-gray-50 p-8 rounded-lg text-center">
+              {value.icon}
+              <h3 className="text-xl font-semibold mb-3">{value.title}</h3>
+              <p className="text-gray-600">{value.description}</p>
+            </div>
+          ))}
+        </div>
+      </section>
 
-      {/* CTA */}
-      <div className="text-center mt-20">
-        <h3 className="text-2xl font-bold mb-4">Join the Movement</h3>
-        <p className="text-gray-700 text-lg mb-6">
-          Be part of a growing community that values style, creativity, and
-          comfort.
-        </p>
-        <a
-          href="/shop"
-          className="inline-block bg-black text-white px-6 py-3 rounded-full font-medium hover:bg-gray-800 transition"
-        >
-          Explore the Collection
-        </a>
-      </div>
+      {/* Team Section */}
+      {/* <section>
+        <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">
+          Meet The Team
+        </h2>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {[
+            {
+              name: "Alex Johnson",
+              role: "Founder & CEO",
+              image: "/team-member1.jpg",
+            },
+            {
+              name: "Sarah Williams",
+              role: "Head of Product",
+              image: "/team-member2.jpg",
+            },
+            {
+              name: "Michael Chen",
+              role: "Tech Lead",
+              image: "/team-member3.jpg",
+            },
+            {
+              name: "Emily Rodriguez",
+              role: "Customer Experience",
+              image: "/team-member4.jpg",
+            },
+          ].map((member, index) => (
+            <div key={index} className="text-center">
+              <div className="relative h-64 w-64 mx-auto mb-4 rounded-full overflow-hidden shadow-md">
+                <Image
+                  src={member.image}
+                  alt={member.name}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <h3 className="text-xl font-semibold">{member.name}</h3>
+              <p className="text-gray-600">{member.role}</p>
+            </div>
+          ))}
+        </div>
+      </section> */}
     </div>
   );
 };
 
-export default AboutUsPage;
+export default About;

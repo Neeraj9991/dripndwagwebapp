@@ -1,98 +1,220 @@
-"use client";
-
 import Link from "next/link";
 import React from "react";
-import { FaInstagram, FaFacebook, FaTwitter } from "react-icons/fa";
-import { SiMastercard, SiVisa, SiGooglepay, SiRazorpay } from "react-icons/si";
+import { FaInstagram, FaFacebook, FaWhatsapp } from "react-icons/fa";
+import {
+  SiMastercard,
+  SiVisa,
+  SiGooglepay,
+  SiRazorpay,
+  SiFlipkart,
+  SiAmazon,
+} from "react-icons/si";
+import { wixClientServer } from "@/lib/wixClientServer";
 
-const Footer = () => {
+const Footer = async () => {
+  // Fetch categories from Wix
+  const wixClient = await wixClientServer();
+  const { items: categories } = await wixClient.collections
+    .queryCollections()
+    .limit(6)
+    .find();
+
   return (
-    <footer className="bg-zinc-900 text-white px-4 sm:px-8 md:px-16 py-12">
-      {/* Top Row */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 mb-10">
-        {/* Address */}
-        <div>
-          <h4 className="font-semibold text-lg mb-4">Address</h4>
-          <p className="text-sm mb-2">123 Drip Street, Mumbai, India</p>
-          <p className="text-sm mb-2">Email: contact@dripndwag.com</p>
-          <p className="text-sm mb-4">Phone: +91 98765 43210</p>
-          <div className="flex gap-4 text-xl">
-            <FaInstagram />
-            <FaFacebook />
-            <FaTwitter />
+    <footer className="mt-5 bg-neutral-950 text-neutral-100 px-4 sm:px-8 lg:px-16 py-16 border-t border-neutral-800">
+      {/* Main Content */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 max-w-7xl mx-auto">
+        {/* Brand Column */}
+        <div className="space-y-6">
+          <h3 className="text-2xl font-bold tracking-tight">DripnDwag</h3>
+          <p className="text-neutral-400 text-sm leading-relaxed">
+            Premium streetwear and urban fashion for the bold and expressive.
+          </p>
+
+          {/* Social Media Links */}
+          <div>
+            <h4 className="text-sm font-semibold text-neutral-300 mb-2">
+              Follow us
+            </h4>
+            <div className="flex gap-4">
+              <a
+                href="https://www.instagram.com/dwagcreation"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="text-neutral-400 hover:text-white transition-colors duration-300"
+              >
+                <FaInstagram className="w-5 h-5" />
+              </a>
+              <a
+                href="https://www.facebook.com/Dwag"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook"
+                className="text-neutral-400 hover:text-white transition-colors duration-300"
+              >
+                <FaFacebook className="w-5 h-5" />
+              </a>
+              <a
+                href="https://wa.me/918058362686"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="WhatsApp"
+                className="text-neutral-400 hover:text-white transition-colors duration-300"
+              >
+                <FaWhatsapp className="w-5 h-5" />
+              </a>
+            </div>
           </div>
+
+          {/* Marketplace Links */}
+          <div>
+            <h4 className="text-sm font-semibold text-neutral-300 mb-2">
+              Find us on
+            </h4>
+            <ul className="space-y-3">
+              <li>
+                <a
+                  href="https://www.amazon.in/s?k=DWAG"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 text-neutral-400 hover:text-white transition-colors duration-300 text-sm"
+                >
+                  <SiAmazon className="w-4 h-4" />
+                  Shop on Amazon
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.flipkart.com/search?q=DWAG"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 text-neutral-400 hover:text-white transition-colors duration-300 text-sm"
+                >
+                  <SiFlipkart className="w-4 h-4" />
+                  Shop on Flipkart
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Quick Links - Dynamic Categories */}
+        <div>
+          <h4 className="text-lg font-semibold mb-6 uppercase tracking-wider">
+            Shop
+          </h4>
+          <ul className="space-y-3">
+            {categories.map((category) => (
+              <li key={category._id}>
+                <Link
+                  href={`/list?cat=${category.slug}`}
+                  className="text-neutral-400 hover:text-white transition-colors duration-300 text-sm"
+                >
+                  {category.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
 
         {/* Company */}
         <div>
-          <h4 className="font-semibold text-lg mb-4">Company</h4>
-          <ul className="text-sm space-y-2">
+          <h4 className="text-lg font-semibold mb-6 uppercase tracking-wider">
+            Company
+          </h4>
+          <ul className="space-y-3">
             <li>
-              <Link href="/about">About Us</Link>
+              <Link
+                href="/about"
+                className="text-neutral-400 hover:text-white transition-colors duration-300 text-sm"
+              >
+                About Us
+              </Link>
             </li>
             <li>
-              <Link href="/contact">Contact Us</Link>
-            </li>
-          </ul>
-        </div>
-
-        {/* Shop */}
-        <div>
-          <h4 className="font-semibold text-lg mb-4">Shop</h4>
-          <ul className="text-sm space-y-2">
-            <li>
-              <Link href="/collection/new-arrivals">New Arrivals</Link>
-            </li>
-            <li>
-              <Link href="/collection/tshirts">T-Shirts</Link>
-            </li>
-            <li>
-              <Link href="/collection/oversize-tshirts">Oversize T-Shirts</Link>
-            </li>
-            <li>
-              <Link href="/collection/hoodies">Hoodies</Link>
+              <Link
+                href="/contact"
+                className="text-neutral-400 hover:text-white transition-colors duration-300 text-sm"
+              >
+                Contact Us
+              </Link>
             </li>
           </ul>
         </div>
 
-        {/* Help */}
+        {/* Contact Info */}
         <div>
-          <h4 className="font-semibold text-lg mb-4">Help</h4>
-          <ul className="text-sm space-y-2">
-            <li>
-              <Link href="/support">Customer Service</Link>
-            </li>
-            <li>
-              <Link href="/legal">Legal & Privacy</Link>
-            </li>
-          </ul>
+          <h4 className="text-lg font-semibold mb-6 uppercase tracking-wider">
+            Contact
+          </h4>
+          <address className="not-italic space-y-3 text-sm text-neutral-400">
+            <p className="hover:text-white transition-colors duration-300">
+              D139 Ground Floor, Abul Fazal,
+              <br />
+              Jamia Nagar, New Delhi 110025
+            </p>
+            <p>
+              <a
+                href="https://wa.me/918058362686"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white transition-colors duration-300"
+              >
+                +91 8058362686
+              </a>
+            </p>
+            <p>
+              <a
+                href="mailto:dwag.care@gmail.com"
+                className="hover:text-white transition-colors duration-300"
+              >
+                dwag.care@gmail.com
+              </a>
+            </p>
+          </address>
         </div>
       </div>
 
-      {/* Bottom Row */}
-      <div className="border-t border-zinc-700 pt-6 flex flex-col sm:flex-row justify-between items-center gap-6">
-        <p className="text-sm">
-          &copy; {new Date().getFullYear()} DripnDwag. All rights reserved.
-        </p>
+      {/* Divider */}
+      <div className="border-t border-neutral-800 my-12 max-w-7xl mx-auto"></div>
 
-        {/* Language & Currency */}
-        <div className="flex items-center gap-4 text-sm">
-          <select className="bg-zinc-800 text-white px-2 py-1 rounded">
-            <option>English</option>
-            <option>Hindi</option>
-          </select>
-          <select className="bg-zinc-800 text-white px-2 py-1 rounded">
-            <option>INR ₹</option>
-            <option>USD $</option>
-          </select>
-        </div>
+      {/* Bottom Bar */}
+      <div className="max-w-7xl mx-auto">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+          {/* Copyright */}
+          <p className="text-neutral-500 text-xs">
+            &copy; {new Date().getFullYear()} DripnDwag. All rights reserved.
+          </p>
 
-        {/* Payment Icons */}
-        <div className="flex items-center gap-4 text-2xl text-white">
-          <SiVisa />
-          <SiMastercard />
-          <SiGooglepay />
-          <SiRazorpay />
+          {/* Payment Methods */}
+          <div className="flex items-center gap-4 text-neutral-500">
+            <SiVisa className="w-8 h-8 hover:text-white transition-colors duration-300" />
+            <SiMastercard className="w-8 h-8 hover:text-white transition-colors duration-300" />
+            <SiGooglepay className="w-8 h-8 hover:text-white transition-colors duration-300" />
+            <SiRazorpay className="w-8 h-8 hover:text-white transition-colors duration-300" />
+          </div>
+
+          {/* Legal Links */}
+          {/* <div className="flex gap-6 text-xs">
+            <Link
+              href="/privacy"
+              className="text-neutral-500 hover:text-white transition-colors duration-300"
+            >
+              Privacy Policy
+            </Link>
+            <Link
+              href="/terms"
+              className="text-neutral-500 hover:text-white transition-colors duration-300"
+            >
+              Terms of Service
+            </Link>
+            <Link
+              href="/refunds"
+              className="text-neutral-500 hover:text-white transition-colors duration-300"
+            >
+              Refund Policy
+            </Link>
+          </div> */}
         </div>
       </div>
     </footer>

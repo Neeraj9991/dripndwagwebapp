@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useWixClient } from "@/hooks/useWixClient";
 
 type Slide = {
   _id: string;
@@ -14,35 +13,36 @@ type Slide = {
   bg: string;
 };
 
+const staticSlides: Slide[] = [
+  {
+    _id: "1",
+    title: "Streetwear Drop 2025",
+    description: "Bold • Minimal • Oversized",
+    img: "/images/1.png", // Replace with your public image path
+    url: "/list?cat=graphic-tees",
+    bg: "bg-white",
+  },
+  {
+    _id: "2",
+    title: "Anime Vibes",
+    description: "Unleash Your Inner Hero",
+    img: "/images/2.png",
+    url: "/list?cat=anime-t-shirt",
+    bg: "bg-black",
+  },
+  {
+    _id: "3",
+    title: "Drip Essentials",
+    description: "Breathable & Stylish Tees",
+    img: "/images/3.png",
+    url: "/list?cat=featured",
+    bg: "bg-yellow-50",
+  },
+];
+
 const Slider = () => {
-  const [slides, setSlides] = useState<Slide[]>([]);
+  const [slides] = useState<Slide[]>(staticSlides);
   const [current, setCurrent] = useState(0);
-  const wixClient = useWixClient();
-
-  useEffect(() => {
-    const fetchSlides = async () => {
-      try {
-        const result = await wixClient.items
-          .queryDataItems({ dataCollectionId: "Sliders" })
-          .find();
-
-        const items = result.items.map((item: any) => ({
-          _id: item._id,
-          title: item.data.title,
-          description: item.data.description,
-          img: item.data.img,
-          url: item.data.url ?? "/",
-          bg: item.data.bg ?? "bg-white",
-        }));
-
-        setSlides(items);
-      } catch (err) {
-        console.error("❌ Failed to fetch sliders:", err);
-      }
-    };
-
-    fetchSlides();
-  }, [wixClient]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -50,8 +50,6 @@ const Slider = () => {
     }, 6000);
     return () => clearInterval(interval);
   }, [slides]);
-
-  if (!slides.length) return null;
 
   return (
     <div className="relative h-[80vh] w-full overflow-hidden bg-neutral-900">

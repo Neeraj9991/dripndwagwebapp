@@ -43,7 +43,7 @@ const SuccessPage = () => {
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.3, duration: 0.5 }}
       >
-        We've emailed you the invoice!
+        We&apos;ve emailed you the invoice!
       </motion.h2>
 
       <motion.p

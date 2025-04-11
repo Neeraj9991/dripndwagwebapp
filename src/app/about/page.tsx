@@ -31,7 +31,7 @@ const About = () => {
             evaluates each product before adding it to our collection.
           </p>
           <p className="text-gray-600">
-            Today, we're proud to serve over 500,000 satisfied customers with a
+            Today, we&apos;re proud to serve over 500,000 satisfied customers with a
             catalog of more than 10,000 products across various categories.
           </p>
           {/* </div> */}
@@ -58,7 +58,7 @@ const About = () => {
               icon: <FaLeaf className="text-green-500 text-4xl mb-4" />,
               title: "Sustainability",
               description:
-                "We're committed to eco-friendly practices and partner with suppliers who share our environmental values.",
+                "We&apos;re committed to eco-friendly practices and partner with suppliers who share our environmental values.",
             },
             {
               icon: <FaHandsHelping className="text-blue-500 text-4xl mb-4" />,

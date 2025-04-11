@@ -13,7 +13,7 @@ const Contact = () => {
             CONTACT US
           </h1>
           <p className="text-neutral-600 max-w-2xl mx-auto">
-            Have questions or feedback? Reach out to our team - we're here to
+            Have questions or feedback? Reach out to our team - we&apos;re here to
             help.
           </p>
         </div>

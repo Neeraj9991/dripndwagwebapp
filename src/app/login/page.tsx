@@ -270,7 +270,7 @@ const LoginPage = () => {
           <div className="text-center text-sm text-gray-600">
             {mode === MODE.LOGIN && (
               <>
-                <span>Don't have an account? </span>
+                <span>Don&apos;t have an account? </span>
                 <button
                   type="button"
                   className="text-lama-600 hover:underline"

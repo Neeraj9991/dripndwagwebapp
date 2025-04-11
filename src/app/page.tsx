@@ -29,9 +29,6 @@ const HomePage = async () => {
       {/* Categories */}
       <section className="mt-24 bg-gray-50 py-12">
         <div className="px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
-          <h2 className="text-2xl font-bold text-gray-900 mb-8">
-            Shop by Category
-          </h2>
           <Suspense fallback={<Skeleton count={6} className="h-40" />}>
             <CategoryList />
           </Suspense>

@@ -15,7 +15,7 @@ const Navbar = () => {
   };
 
   return (
-    <header className="mb-8 h-20 border-b border-gray-200 px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64 bg-white sticky top-0 z-50">
+    <header className="mb-8 h-20 border-b border-gray-200 px-4 sm:px-6 md:px-8 lg:px-16 xl:px-24 2xl:px-32 bg-white sticky top-0 z-50">
       {/* MOBILE */}
       <div className="flex md:hidden items-center justify-between h-full relative">
         <Link href="/" className="flex items-center">
@@ -49,7 +49,6 @@ const Navbar = () => {
               </Link>
             ))}
 
-            {/* NavIcons in mobile menu */}
             <div className="border-t border-gray-200 px-4 py-4 flex justify-center">
               <NavbarIcons />
             </div>
@@ -58,21 +57,20 @@ const Navbar = () => {
       </div>
 
       {/* DESKTOP */}
-      <div className="hidden md:flex items-center justify-between h-full">
-        {/* Left - Logo + Navigation */}
-        <div className="w-1/3 xl:w-1/2 flex items-center gap-10">
-          <Link href="/" className="flex items-center gap-3">
+      <div className="hidden md:flex items-center justify-between h-full w-full">
+        {/* Left: Logo & Nav */}
+        <div className="flex items-center gap-8 min-w-0">
+          <Link href="/" className="flex items-center shrink-0">
             <Image
               src="/logo.png"
-              alt="Drip n Dwag Logo"
-              width={100}
+              alt="Drip n Dwag"
+              width={90}
               height={40}
               className="object-contain"
             />
           </Link>
 
-          {/* Navigation Links */}
-          <nav className="hidden xl:flex gap-8 text-base font-semibold text-gray-700">
+          <nav className="flex gap-6 text-sm xl:text-base font-semibold text-gray-700 flex-wrap">
             <Link href="/" className="hover:text-black transition">
               Home
             </Link>
@@ -91,9 +89,8 @@ const Navbar = () => {
           </nav>
         </div>
 
-        {/* Right - Searchbar & Icons */}
-        <div className="w-2/3 xl:w-1/2 flex items-center justify-end gap-6">
-          {/* Optional: <SearchBar /> */}
+        {/* Right: Icons */}
+        <div className="flex items-center justify-end gap-4 shrink-0">
           <NavbarIcons />
         </div>
       </div>

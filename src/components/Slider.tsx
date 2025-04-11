@@ -22,7 +22,7 @@ const Slider = () => {
   useEffect(() => {
     const fetchSlides = async () => {
       try {
-        const result = await wixClient.items.dataItems
+        const result = await wixClient.items
           .queryDataItems({ dataCollectionId: "Sliders" })
           .find();
 

@@ -2,67 +2,85 @@ import { create } from "zustand";
 import { currentCart } from "@wix/ecom";
 import { WixClient } from "@/context/wixContext";
 
+type Cart = currentCart.Cart | null;
+
 type CartState = {
-  cart: currentCart.Cart;
+  cart: Cart;
   isLoading: boolean;
   counter: number;
-  getCart: (wixClient: WixClient) => void;
+  getCart: (wixClient: WixClient) => Promise<void>;
   addItem: (
     wixClient: WixClient,
     productId: string,
     variantId: string,
     quantity: number
-  ) => void;
-  removeItem: (wixClient: WixClient, itemId: string) => void;
+  ) => Promise<void>;
+  removeItem: (wixClient: WixClient, itemId: string) => Promise<void>;
 };
 
 export const useCartStore = create<CartState>((set) => ({
-  cart: [],
-  isLoading: true,
+  cart: null,
+  isLoading: false,
   counter: 0,
+
   getCart: async (wixClient) => {
+    set({ isLoading: true });
     try {
       const cart = await wixClient.currentCart.getCurrentCart();
       set({
-        cart: cart || [],
+        cart,
+        counter: cart?.lineItems?.length || 0,
         isLoading: false,
-        counter: cart?.lineItems.length || 0,
       });
-    } catch (err) {
-      set((prev) => ({ ...prev, isLoading: false }));
+    } catch (error) {
+      console.error("❌ Failed to fetch cart:", error);
+      set({ isLoading: false });
     }
   },
+
   addItem: async (wixClient, productId, variantId, quantity) => {
-    set((state) => ({ ...state, isLoading: true }));
-    const response = await wixClient.currentCart.addToCurrentCart({
-      lineItems: [
-        {
-          catalogReference: {
-            appId: process.env.NEXT_PUBLIC_WIX_APP_ID!,
-            catalogItemId: productId,
-            ...(variantId && { options: { variantId } }),
+    set({ isLoading: true });
+
+    try {
+      const response = await wixClient.currentCart.addToCurrentCart({
+        lineItems: [
+          {
+            catalogReference: {
+              appId: process.env.NEXT_PUBLIC_WIX_APP_ID!,
+              catalogItemId: productId,
+              ...(variantId && { options: { variantId } }),
+            },
+            quantity,
           },
-          quantity: quantity,
-        },
-      ],
-    });
+        ],
+      });
 
-    set({
-      cart: response.cart,
-      counter: response.cart?.lineItems.length,
-      isLoading: false,
-    });
+      set({
+        cart: response.cart,
+        counter: response.cart?.lineItems?.length || 0,
+        isLoading: false,
+      });
+    } catch (error) {
+      console.error("❌ Failed to add item:", error);
+      set({ isLoading: false });
+    }
   },
-  removeItem: async (wixClient, itemId) => {
-    set((state) => ({ ...state, isLoading: true }));
-    const response = await wixClient.currentCart.removeLineItemsFromCurrentCart(
-      [itemId]
-    );
 
-    set({
-      cart: response.cart,
-      counter: response.cart?.lineItems.length,
-      isLoading: false,
-    });
+  removeItem: async (wixClient, itemId) => {
+    set({ isLoading: true });
+
+    try {
+      const response =
+        await wixClient.currentCart.removeLineItemsFromCurrentCart([itemId]);
+
+      set({
+        cart: response.cart,
+        counter: response.cart?.lineItems?.length || 0,
+        isLoading: false,
+      });
+    } catch (error) {
+      console.error("❌ Failed to remove item:", error);
+      set({ isLoading: false });
+    }
   },
 }));

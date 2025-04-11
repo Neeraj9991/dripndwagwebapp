@@ -11,6 +11,7 @@ import { motion, AnimatePresence } from "framer-motion";
 const CartModal = ({ onClose }: { onClose: () => void }) => {
   const wixClient = useWixClient();
   const { cart, isLoading, removeItem } = useCartStore();
+  const lineItems = cart?.lineItems ?? [];
 
   const handleCheckout = async () => {
     try {
@@ -36,15 +37,13 @@ const CartModal = ({ onClose }: { onClose: () => void }) => {
     }
   };
 
-  function calculateSubtotal(cart: currentCart.Cart | null): number {
-    if (!cart || !cart.lineItems) return 0;
-
-    return cart.lineItems.reduce((total, item) => {
+  const calculateSubtotal = (): number => {
+    return lineItems.reduce((total, item) => {
       const price = Number(item.price?.amount || 0);
       const quantity = item.quantity || 1;
       return total + price * quantity;
     }, 0);
-  }
+  };
 
   return (
     <AnimatePresence>
@@ -74,7 +73,7 @@ const CartModal = ({ onClose }: { onClose: () => void }) => {
             </button>
           </div>
 
-          {!cart.lineItems || cart.lineItems.length === 0 ? (
+          {lineItems.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center p-8 text-center">
               <motion.div
                 initial={{ scale: 0.8 }}
@@ -114,7 +113,7 @@ const CartModal = ({ onClose }: { onClose: () => void }) => {
           ) : (
             <>
               <div className="h-[calc(100%-180px)] overflow-y-auto p-4">
-                {cart.lineItems.map((item) => (
+                {lineItems.map((item) => (
                   <motion.div
                     key={item._id}
                     initial={{ opacity: 0, y: 10 }}
@@ -189,7 +188,7 @@ const CartModal = ({ onClose }: { onClose: () => void }) => {
                     Subtotal
                   </span>
                   <span className="font-bold text-gray-900">
-                    ${calculateSubtotal(cart).toFixed(2)}
+                    ${calculateSubtotal().toFixed(2)}
                   </span>
                 </div>
                 <p className="text-xs text-gray-500 mb-4 text-center">
